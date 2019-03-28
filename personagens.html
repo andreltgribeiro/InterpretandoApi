@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+    <style>
+            img{
+                height: 100px;
+                width:auto;
+                align-items: center;
+            }
+            body{
+            background-color: #212529;
+            color: white;
+        }
+        td{
+            text-align: center;
+        }
+        tr{
+            text-align: center;
+        }
+        table{
+            width: 70%;
+        }
+        </style>
+</head>
+<body>
+    
+        <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+                <header class="masthead mb-auto cabecalho">
+                  <div class="inner">
+                    <nav class="nav nav-masthead justify-content-center">
+                      <a class="nav-link active" href="index.html">Home</a>
+                      <a class="nav-link" href="personagens.html">Personagens</a>
+                      <a class="nav-link" href="#">Lugar nenhum</a>
+                    </nav>
+                  </div>
+                </header>
+        <table class="table table-hover" id="tabelita">
+                <thead class="thead-darks">
+                    <tr>
+                        <th>#</th>
+                        <th>Titulo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                      </tbody>
+            </table>
+            <script>
+                let personagens =[];
+        
+                function certissimo(){
+                    var dados = JSON.parse(this.responseText);
+                    console.log(dados);
+                    createTable(dados);
+                };
+        
+                function azedou(err){
+                    console.log("azedou velho", err);
+                };
+        
+                var xmlHTTpReqst = new XMLHttpRequest();
+                xmlHTTpReqst.onload = certissimo;
+                xmlHTTpReqst.onerror = azedou;
+        
+                xmlHTTpReqst.open('GET', 'https://salty-atoll-57329.herokuapp.com/personagens');
+                xmlHTTpReqst.send();
+        
+                let table = document.querySelector("#tabelita");
+        
+                function createTable(personagens){
+                    personagens.forEach(element => {
+                        let newLine = document.createElement("tr");
+                        let colunaTitulo = document.createElement("td");
+                        colunaTitulo.innerText = element.nome;
+                        let colunaNome = document.createElement("td");
+                        colunaNome.innerText = element.lancamento;
+                        let colunaAcao = document.createElement("td");
+                        colunaAcao.innerHTML = "<img src='"+ element.urlImagem +"'/>";
+        
+                        newLine.appendChild(colunaTitulo);
+                        newLine.appendChild(colunaNome);
+                        newLine.appendChild(colunaAcao);
+        
+                        table.appendChild(newLine);
+                    });
+                }
+            </script>
+</body>
+</html>
+
+
